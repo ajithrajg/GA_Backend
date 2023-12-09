@@ -4,8 +4,9 @@ const { getDatabase } = require('firebase-admin/database');
 //Firebase CSP methods
 var reports = null;
 function AddCspReport(reports, admin) {
-    try {
-        return new Promise(async (resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+
             const db = getDatabase();
             let existingData = await firebaseread(admin);
             let ref = db.ref('server');
@@ -21,9 +22,9 @@ function AddCspReport(reports, admin) {
                 if (existingData['result'] && existingData['server']['data']) {
                     IdAsString = existingData['server']['IDs'];
                     if (typeof existingData['server']['data'] != 'object') {
-                            data = JSON.parse(existingData['server']['data']);
+                        data = JSON.parse(existingData['server']['data']);
                     }
-                    else  {
+                    else {
                         data = existingData['server']['data'];
                     }
                 }
@@ -37,7 +38,7 @@ function AddCspReport(reports, admin) {
                 if (!IdAsString.includes(uuid)) {
                     IdAsString += uuid + ",";
                     dataObj[uuid] = jsonData;
-                    finalData = {...dataObj,...data };
+                    finalData = { ...dataObj, ...data };
 
                     cspreport.set(finalData);
                     type.set(IdAsString);
@@ -59,20 +60,21 @@ function AddCspReport(reports, admin) {
                     resolve(cspReports);
                 }
             }
+        }
+        catch (err) {
+            throw err;
+        }
 
+    });
 
-        })
-    }
-    catch (err) {
-        throw err;
-    }
 }
 function UpdateCspReport(request) {
-    try {
-        const db = getDatabase();
-        let jsonReq = typeof request != 'object' ? JSON.parse(request) : request;
-        let id = jsonReq['id'], report = jsonReq['report'];
-        return new Promise((resolve, reject) => {
+    const db = getDatabase();
+    let jsonReq = typeof request != 'object' ? JSON.parse(request) : request;
+    let id = jsonReq['id'], report = jsonReq['report'];
+    return new Promise((resolve, reject) => {
+        try {
+
             const ref = db.ref('server/');
             let cspreports = ref.child('data/' + id);
             cspreports.set(report);
@@ -80,18 +82,20 @@ function UpdateCspReport(request) {
                 "data": 'Csp report has been updated successfully!',
                 "result": true
             });
-        });
-    }
-    catch (err) {
-        throw err;
-    }
+        }
+        catch (err) {
+            throw err;
+        }
+    });
+
 }
 function DeleteCspReport(request) {
-    try {
-        const db = getDatabase();
-        let jsonReq = typeof request != 'object' ? JSON.parse(request) : request;
-        let id = jsonReq['id'];
-        return new Promise(async (resolve, reject) => {
+    const db = getDatabase();
+    let jsonReq = typeof request != 'object' ? JSON.parse(request) : request;
+    let id = jsonReq['id'];
+    return new Promise(async (resolve, reject) => {
+        try {
+
             const ref = db.ref('server/');
             let cspreports = ref.child('data/' + id);
             let type = ref.child('IDs');
@@ -109,11 +113,12 @@ function DeleteCspReport(request) {
                 "data": 'Csp report has been deleted successfully!',
                 "result": true
             });
-        });
-    }
-    catch (err) {
-        throw err;
-    }
+        }
+        catch (err) {
+            throw err;
+        }
+    });
+
 }
 function GetUUID(csp) {
     try {
@@ -127,19 +132,19 @@ function GetUUID(csp) {
         throw ex;
     }
 }
-function ReadCspReports(admin) {
-    try {
-        return new Promise(async (resolve, reject) => {
-
+async function ReadCspReports(admin) {
+    return new Promise(async (resolve, reject) => {
+        try {
             reports = await firebaseread(admin);
 
             if (reports) { if (reports['result']) resolve(reports); } else reject(reports);
+        } catch (asyncError) {
+            // Handle errors from the asynchronous operation
+            let result = { "Error": asyncError, "result": false }
+            reject(result);
+        }
+    });
 
-        });
-    }
-    catch (e) {
-        throw e;
-    }
 }
 async function firebaseread(admin) {
     try {

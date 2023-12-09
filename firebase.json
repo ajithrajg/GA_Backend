@@ -10,13 +10,5 @@
         "firebase-debug.*.log"
       ]
     }
-  ],
-  "hosting": {
-    "public": "public/gaauthservices/dist",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ]
-  }
+  ]
 }

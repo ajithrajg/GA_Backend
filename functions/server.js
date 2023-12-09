@@ -1,7 +1,9 @@
 // Your Express server code
+const functions = require('firebase-functions');
+const sessioncredentials = functions.config();
+console.log(sessioncredentials);
 const express = require('express');
 const app = express();
-const functions = require('firebase-functions');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const router = require('./Router/mainRoute');
@@ -25,7 +27,7 @@ app.use(bodyParser.json());
 
 app.use(
   session({
-    secret: 'my_secure_secret_for_integrity', // Replace with a secure secret
+    secret: "sessioncredentials", // Replace with a secure secret
     resave: false,
     saveUninitialized: true,
   })

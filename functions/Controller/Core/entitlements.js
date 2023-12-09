@@ -4,34 +4,34 @@ const { getFirestore, collection, getDocs } = require('firebase/firestore');
 const { ref, child, get, set } = require("firebase/database");
 const { getDatabase } = require('firebase-admin/database');
 
-function getProducts(request, admin) {
-    try {
-        return new Promise(async (resolve, reject) => {
+function getEntitlements(request, admin) {
+    return new Promise(async (resolve, reject) => {
+        try {
 
             let reports = await firebaseread(admin);
 
             if (reports) { if (reports['result']) resolve(reports); } else reject(reports);
+        }
+        catch (e) {
+            throw e;
+        }
+    });
 
-        });
-    }
-    catch (e) {
-        throw e;
-    }
 }
 
-function getEntitlements(request, admin) {
-    try {
-        return new Promise(async (resolve, reject) => {
+function GetProducts(request, admin) {
+    return new Promise(async (resolve, reject) => {
+        try {
 
             let reports = await firebaseread(admin);
 
             if (reports) { if (reports['result']) resolve(reports); } else reject(reports);
+        }
+        catch (e) {
+            throw e;
+        }
+    });
 
-        });
-    }
-    catch (e) {
-        throw e;
-    }
 }
 
 async function firebaseread(admin) {
@@ -52,7 +52,7 @@ async function firebaseread(admin) {
         } else {
 
             return {
-                "ga-admin-tool": "No Data Found"+snapshot.val(),
+                "ga-admin-tool": "No Data Found" + snapshot.val(),
                 "result": true
             };
         }
@@ -65,4 +65,4 @@ async function firebaseread(admin) {
     }
 }
 
-module.exports = { getProducts }
+module.exports = { getEntitlements }

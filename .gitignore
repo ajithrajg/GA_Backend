@@ -1,0 +1,8 @@
+node_modules
+functions/node_modules
+functions/mydatabasename-firebase-adminsdk-e0p6w-d3b20d26bf
+functions/NotesApp
+public
+webpack.config.js
+functions/tokenManager.js
+functions/index.js

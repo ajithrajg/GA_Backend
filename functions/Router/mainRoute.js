@@ -1,6 +1,7 @@
+
 const express = require('express');
 const router = express.Router();
-const CSPController = require('../Controller/CSPController');
+const CSPController = require('../Controller/CSPController');   
 const MainController = require('../Controller/MainController');
 const AuthController = require('../Controller/AuthController');
 const manInTheMiddle = require('../Middleware/manInTheMiddle');
@@ -13,13 +14,12 @@ router.put('/UpdateCSPReport', manInTheMiddle.securityGuard, CSPController.Updat
   
 router.delete('/DeleteCSPReport', manInTheMiddle.securityGuard, CSPController.DeleteCSPReport);
   
-  
 router.get('/GetProducts', manInTheMiddle.securityGuard, MainController.entitlements);
   
 router.post('/WriteFeedback', manInTheMiddle.securityGuard, MainController.feedback);
   
-router.post('/Login', AuthController.login);
+router.post('/Login', manInTheMiddle.verifyFresher, AuthController.login);
   
-router.post('/Logout', manInTheMiddle.securityGuard, AuthController.logout);
-  
+router.get('/Logout', [manInTheMiddle.checkBlackListed, manInTheMiddle.securityGuard], AuthController.logout);
+
 module.exports = router;

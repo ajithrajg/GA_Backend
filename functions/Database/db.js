@@ -1,5 +1,7 @@
 const MongoClient = require("mongodb").MongoClient;
+const functions = require('firebase-functions');
 
+const dbConnectionString = functions.config().ga.db;
 
 
 // Use username and password in your code
@@ -12,7 +14,7 @@ async function run(dbname, tblname) {
   // you do not want to store your password in plain-text here.
   console.log('db: '+dbname+' table: '+tblname);
   
-  const uri = `mongodb+srv://<username>:<password>@cluster0.b0ottmn.mongodb.net/?retryWrites=true&w=majority`;
+  const uri = dbConnectionString;
   console.log('starting connection...');
   // The MongoClient is the object that references the connection to our
   // datastore (Atlas, for example)

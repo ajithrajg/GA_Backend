@@ -1,8 +1,9 @@
 const { getDatabase } = require('firebase-admin/database');
 
 function writeWebFeedback(request, admin) {
-    try {
-        return new Promise(async (resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+
             const db = getDatabase();
             let ref = db.ref('ga-admin-tool');
             let feedback = ref.child('feedbacks');
@@ -14,34 +15,35 @@ function writeWebFeedback(request, admin) {
                     if (typeof existingData['feedback'] != 'object') {
                         new_feedback = (JSON.parse(existingData['feedback']));
                     }
-                    else  {
+                    else {
                         new_feedback = (existingData['feedback']);
                     }
                 }
             }
             new_feedback.push({
                 "feedback": request,
-                "Timestamp": (new Date().toDateString())+' '+(new Date())
+                "Timestamp": (new Date().toDateString()) + ' ' + (new Date())
             });
-            feedback.update(new_feedback, (error)=> {
+            feedback.update(new_feedback, (error) => {
                 let feedbackReport = {
-                    "feedback": 'Backend service failure. platform: firebase, operation: write, statuc: failed, Error Message:'+error,
+                    "feedback": 'Backend service failure. platform: firebase, operation: write, statuc: failed, Error Message:' + error,
                     "result": false
                 }
-    
+
                 reject(feedbackReport);
-            });  
+            });
             let feedbackReport = {
                 "feedback": 'Feedback has been recorded successfully!',
                 "result": true
             }
 
             resolve(feedbackReport);
-        });
-    }
-    catch (e) {
-        throw e;
-    }
+        }
+        catch (e) {
+            throw e;
+        }
+    });
+
 }
 
 async function fetchWebFeedback(admin) {
