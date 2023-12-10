@@ -1,9 +1,3 @@
-// Import the functions you need from the SDKs you need
-const { initializeApp, firebase } = require("firebase/app");
-const { getFirestore, collection, getDocs } = require('firebase/firestore');
-const { ref, child, get, set } = require("firebase/database");
-const { getDatabase } = require('firebase-admin/database');
-
 function getEntitlements(request, admin) {
     return new Promise(async (resolve, reject) => {
         try {

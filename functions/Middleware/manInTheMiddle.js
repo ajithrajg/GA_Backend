@@ -24,9 +24,6 @@ const checkBlackListed = async (req, res, next) => {
   try {
     if (req.get('from-ga') && req.get('Authorization')) {
       const token = req.get('Authorization');
-      console.log('checking token...');
-      console.log(tokenBlacklist);
-      console.log(tokenBlacklist.includes(token));
       // Check if the token is in the blacklist
       if ((token && tokenBlacklist.includes(token))) {
         console.log('token blacklisted!');

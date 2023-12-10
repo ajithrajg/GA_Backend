@@ -2,8 +2,6 @@ const MongoClient = require("mongodb").MongoClient;
 const functions = require('firebase-functions');
 
 const dbConnectionString = functions.config().ga.db;
-
-
 // Use username and password in your code
 
 async function run(dbname, tblname) {
@@ -12,7 +10,6 @@ async function run(dbname, tblname) {
   // Altas cluster specifics. Be sure it includes
   // a valid username and password! Note that in a production environment,
   // you do not want to store your password in plain-text here.
-  console.log('db: '+dbname+' table: '+tblname);
   
   const uri = dbConnectionString;
   console.log('starting connection...');
