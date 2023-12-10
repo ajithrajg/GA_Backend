@@ -6,17 +6,17 @@ const MainController = require('../Controller/MainController');
 const AuthController = require('../Controller/AuthController');
 const manInTheMiddle = require('../Middleware/manInTheMiddle');
 
-router.get('/ReadCSPReports', manInTheMiddle.securityGuard, CSPController.ReadCSPReports);
+router.get('/ReadCSPReports',  CSPController.ReadCSPReports);
   
-router.post('/AddCSPReports', manInTheMiddle.securityGuard, CSPController.AddCSPReport);
+router.post('/AddCSPReports', CSPController.AddCSPReport);
   
-router.put('/UpdateCSPReport', manInTheMiddle.securityGuard, CSPController.UpdateCSPReport);
+router.put('/UpdateCSPReport',  CSPController.UpdateCSPReport);
   
 router.delete('/DeleteCSPReport', manInTheMiddle.securityGuard, CSPController.DeleteCSPReport);
   
-router.get('/GetProducts', manInTheMiddle.securityGuard, MainController.entitlements);
+router.get('/GetEntitlements',  MainController.entitlements);
   
-router.post('/WriteFeedback', manInTheMiddle.securityGuard, MainController.feedback);
+router.post('/WriteFeedback', MainController.feedback);
   
 router.post('/Login', manInTheMiddle.verifyFresher, AuthController.login);
   
